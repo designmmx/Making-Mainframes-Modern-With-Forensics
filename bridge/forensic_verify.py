@@ -1,4 +1,5 @@
-import hashlib import json
+import hashlib 
+import json
 
 # 1. The 42-byte "Raw" record as it would come off the Mainframe 3390 Cylinder
 # (This is a hex representation of EBCDIC data)
