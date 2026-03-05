@@ -1,4 +1,4 @@
-import hashlib
+import hashlib import json
 
 # 1. The 42-byte "Raw" record as it would come off the Mainframe 3390 Cylinder
 # (This is a hex representation of EBCDIC data)
@@ -20,3 +20,42 @@ def verify_integrity(record, expected_hash):
     else:
         print("❌ FORENSIC ALERT: Data has been tampered with!")
         return False
+
+
+#Integrity check complete. let's carve up our 42b of data into its component fields
+def extract_fields(record):
+    # Carving the bytes according to the COBOL map
+    ts_bytes = record[0:14]
+    id_bytes = record[14:24]
+    amount_bytes = record[24:34]
+    
+    return ts_bytes, id_bytes, amount_bytes
+
+# THE CALL: Passing our record into the carver
+ts, tx_id, amount = extract_fields(ebcdic_record)
+
+print(f"Extracted Raw ID: {tx_id}")
+
+# Translating the EBCDIC Transaction ID to modern ASCII/UTF-8
+readable_id = id_bytes.decode('cp500')
+print(f"Mainframe ID: {readable_id}")
+
+# The Final Forensic Bridge Output
+forensic_json = {
+    "status": "VERIFIED",
+    "metadata": {
+        "timestamp": ts_bytes.decode('cp500'),
+        "tx_id": id_bytes.decode('cp500')
+    },
+    "financials": {
+        "amount_raw": amount_bytes.decode('cp500'),
+        "currency": "USD"
+    },
+    "security": {
+        "sha256_hash": calculated_hash 
+    }
+}
+
+print(json.dumps(forensic_json, indent=4))
+
+
