@@ -52,3 +52,16 @@ forensic_json = {
 }
 
 print(json.dumps(forensic_json, indent=4))
+
+# TEST CASE: The word "MAINFRME" in EBCDIC CP500
+test_record = b'\xd4\xc1\xc9\xd5\xc6\xd9\xd4\xc5'
+# The verified SHA-256 for those specific bytes is:
+expected_test_hash = "670499e03c6210f4492982d6108f9721798835848ed6022e37452d929910d68f"
+
+test_hash = verify_integrity(test_record)
+
+if test_hash == expected_test_hash:
+    print("🧪 TEST PASSED: The Python Hashing Machine is accurate.")
+else:
+    print("🧪 TEST FAILED: Check the logic.")
+    
