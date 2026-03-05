@@ -2,8 +2,7 @@ import hashlib import json
 
 # 1. The 42-byte "Raw" record as it would come off the Mainframe 3390 Cylinder
 # (This is a hex representation of EBCDIC data)
-ebcdic_record = b'\xf2\xf0\xf2\xf6\xf0\xf3\xf0\xf5\xf1\xf9\xf4\xf5\xf0\xf0...' 
-
+ebcdic_record = b'\xf2\xf0\xf2\xf6\xf0\xf3\xf0\xf5\xf1\xf9\xf4\xf5\xf0\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xf0\xf0\xf0\xf0\xf0\xf0\xf1\xf2\xf5\xf5\xf0\x8f\x32\x61\x1b\xde\x77\x11\x0a'
 def verify_integrity(record, expected_hash):
     # 2. Run the SHA-256 "Defined Procedure"
     sha256_machine = hashlib.sha256()
